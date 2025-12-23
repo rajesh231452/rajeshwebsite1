@@ -50,6 +50,24 @@
     <!-- Polyfill for process.env -->
     <script>
       window.process = { env: { API_KEY: '' } };
+      
+      // Global Error Handler for the Loading Screen
+      window.addEventListener('error', function(event) {
+        const status = document.getElementById('loading-text');
+        if (status) {
+          status.textContent = "DARK MAGIC DETECTED: " + event.message;
+          status.style.color = "#7E0001";
+          status.style.fontSize = "1.5rem";
+        }
+      });
+      window.addEventListener('unhandledrejection', function(event) {
+        const status = document.getElementById('loading-text');
+        if (status) {
+          status.textContent = "CURSE REJECTED: " + event.reason;
+          status.style.color = "#7E0001";
+          status.style.fontSize = "1.5rem";
+        }
+      });
     </script>
 
     <!-- Babel -->
@@ -76,6 +94,7 @@
           'index': './index.tsx'
         };
 
+        // Explicitly use React 18 versions that are known to work well with standalone Babel
         const imports = {
           "react": "https://esm.sh/react@18.2.0",
           "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
@@ -108,7 +127,7 @@
           for (const [name, url] of Object.entries(files)) {
             status.textContent = `SUMMONING ${name.toUpperCase()}...`;
             const res = await fetch(url);
-            if (!res.ok) throw new Error(`Failed to load ${url}`);
+            if (!res.ok) throw new Error(`Failed to load ${url} (Status: ${res.status})`);
             let code = await res.text();
 
             // 3. Rewrite relative imports to absolute keys
@@ -120,7 +139,6 @@
               return match;
             });
             
-            // Also handle import('...') dynamic imports if any (rare in this stack)
             code = code.replace(/import\(['"]([^'"]+)['"]\)/g, (match, path) => {
                if (path.startsWith('.')) {
                 const resolved = resolveImport(name, path);
@@ -140,25 +158,32 @@
             imports[name] = URL.createObjectURL(blob);
           }
 
-          // 6. Inject Import Map
+          // 6. Inject Import Map (Only one allowed per page!)
           const map = document.createElement('script');
           map.type = 'importmap';
           map.textContent = JSON.stringify({ imports });
           document.head.appendChild(map);
 
           // 7. Load Entry Point
+          // We wait a tick to ensure the import map is registered
+          await new Promise(r => setTimeout(r, 50));
+          
           const entry = document.createElement('script');
           entry.type = 'module';
           entry.textContent = "import './index';";
           document.body.appendChild(entry);
           
           status.textContent = "DONE!";
-          setTimeout(() => document.getElementById('loading-screen').remove(), 500);
+          // Remove loading screen after a short delay to show the app
+          setTimeout(() => {
+            const screen = document.getElementById('loading-screen');
+            if(screen) screen.style.display = 'none';
+          }, 500);
 
         } catch (e) {
           console.error(e);
           status.textContent = "SPELL FIZZLED: " + e.message;
-          status.style.color = "red";
+          status.style.color = "#7E0001";
         }
       }
 
@@ -179,7 +204,7 @@
 </head>
   <body>
     <div id="loading-screen" style="position: fixed; inset: 0; background: #F5E6BE; z-index: 9999; display: flex; align-items: center; justify-content: center; flex-direction: column;">
-      <div id="loading-text" style="font-family: 'Bangers', cursive; font-size: 2rem; color: #7E0001;">
+      <div id="loading-text" style="font-family: 'Bangers', cursive; font-size: 2rem; color: #7E0001; text-align: center; padding: 20px;">
         OPENING GRIMOIRE...
       </div>
     </div>
