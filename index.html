@@ -37,7 +37,7 @@
       }
     </script>
     <style>
-      body { background-color: #F5E6BE; color: #1A1A1A; scroll-behavior: smooth; }
+      body { background-color: #F5E6BE; color: #1A1A1A; scroll-behavior: smooth; cursor: none !important; }
       .bg-halftone { background-size: 8px 8px; background-image: radial-gradient(circle, rgba(0, 0, 0, 0.1) 1px, transparent 1px); }
       ::-webkit-scrollbar { width: 12px; }
       ::-webkit-scrollbar-track { background: #F5E6BE; }
@@ -46,23 +46,23 @@
       .text-stroke-crimson { -webkit-text-stroke: 1px #7E0001; }
       .text-stroke-sm { -webkit-text-stroke: 1px #1A1A1A; }
       
-      /* Smooth reveal for hidden sections when clicking nav */
       :target {
         scroll-margin-top: 80px;
       }
+
+      /* Cursor override for specific elements if needed */
+      button, a, .interactive { cursor: none !important; }
     </style>
 
     <!-- Polyfill for process.env -->
     <script>
       window.process = { env: { API_KEY: '' } };
       
-      // Global Error Handler for the Loading Screen
       window.addEventListener('error', function(event) {
         const status = document.getElementById('loading-text');
         if (status) {
           status.textContent = "DARK MAGIC DETECTED: " + event.message;
           status.style.color = "#7E0001";
-          status.style.fontSize = "1.5rem";
         }
       });
       window.addEventListener('unhandledrejection', function(event) {
@@ -70,7 +70,6 @@
         if (status) {
           status.textContent = "CURSE REJECTED: " + event.reason;
           status.style.color = "#7E0001";
-          status.style.fontSize = "1.5rem";
         }
       });
     </script>
@@ -83,7 +82,6 @@
       async function loadApp() {
         const status = document.getElementById('loading-text');
         
-        // 1. Define files and their paths
         const files = {
           'types': './types.ts',
           'services/geminiService': './services/geminiService.ts',
@@ -100,7 +98,6 @@
           'index': './index.tsx'
         };
 
-        // Static Import Map defined dynamically to avoid browser double-map error
         const imports = {
           "react": "https://esm.sh/react@18.2.0",
           "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
@@ -129,14 +126,12 @@
         };
 
         try {
-          // 2. Fetch and compile all files
           for (const [name, url] of Object.entries(files)) {
             status.textContent = `SUMMONING ${name.toUpperCase()}...`;
             const res = await fetch(url);
-            if (!res.ok) throw new Error(`Failed to load ${url} (Status: ${res.status})`);
+            if (!res.ok) throw new Error(`Failed to load ${url}`);
             let code = await res.text();
 
-            // 3. Rewrite relative imports to absolute keys
             code = code.replace(/from\s+['"]([^'"]+)['"]/g, (match, path) => {
               if (path.startsWith('.')) {
                 const resolved = resolveImport(name, path);
@@ -153,24 +148,20 @@
               return match;
             });
 
-            // 4. Transform with Babel
             const transformed = Babel.transform(code, {
               presets: ['react', ['typescript', { isTSX: true, allExtensions: true }]],
               filename: url,
             }).code;
 
-            // 5. Create Blob
             const blob = new Blob([transformed], { type: 'application/javascript' });
             imports[name] = URL.createObjectURL(blob);
           }
 
-          // 6. Inject Import Map
           const map = document.createElement('script');
           map.type = 'importmap';
           map.textContent = JSON.stringify({ imports });
           document.head.appendChild(map);
 
-          // 7. Load Entry Point
           await new Promise(r => setTimeout(r, 50));
           
           const entry = document.createElement('script');
@@ -182,7 +173,7 @@
           setTimeout(() => {
             const screen = document.getElementById('loading-screen');
             if(screen) screen.style.display = 'none';
-          }, 500);
+          }, 800);
 
         } catch (e) {
           console.error(e);
@@ -193,14 +184,14 @@
 
       window.addEventListener('load', loadApp);
     </script>
-<script type="importmap">
+  <script type="importmap">
 {
   "imports": {
     "react": "https://esm.sh/react@^19.2.3",
     "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
     "react/": "https://esm.sh/react@^19.2.3/",
     "@google/genai": "https://esm.sh/@google/genai@^1.34.0",
-    "framer-motion": "https://esm.sh/framer-motion@^12.23.26",
+    "framer-motion": "https://esm.sh/framer-motion@^12.24.8",
     "lucide-react": "https://esm.sh/lucide-react@^0.562.0"
   }
 }

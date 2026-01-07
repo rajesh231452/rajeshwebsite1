@@ -8,12 +8,15 @@ import Contact from './components/Contact';
 import Oracle from './components/Oracle';
 import RajeshPage from './components/RajeshPage';
 import Navbar from './components/Navbar';
+import MagicCursor from './components/MagicCursor';
 
 const App: React.FC = () => {
   const [view, setView] = useState<'home' | 'rajesh'>('home');
 
   return (
-    <main className="min-h-screen bg-parchment selection:bg-crimson selection:text-white overflow-x-hidden pt-16">
+    <main className="min-h-screen bg-parchment selection:bg-crimson selection:text-white overflow-x-hidden">
+      <MagicCursor />
+      
       <AnimatePresence mode="wait">
         {view === 'rajesh' ? (
           <motion.div
@@ -31,6 +34,7 @@ const App: React.FC = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            className="pt-16"
           >
             <Navbar />
             <Oracle />
@@ -44,7 +48,7 @@ const App: React.FC = () => {
             </div>
 
             {/* Noise Overlay for vintage feel */}
-            <div className="fixed inset-0 pointer-events-none opacity-[0.03] z-50 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]"></div>
+            <div className="fixed inset-0 pointer-events-none opacity-[0.03] z-[60] bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]"></div>
           </motion.div>
         )}
       </AnimatePresence>
