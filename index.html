@@ -37,7 +37,7 @@
       }
     </script>
     <style>
-      body { background-color: #F5E6BE; color: #1A1A1A; scroll-behavior: smooth; cursor: none !important; }
+      body { background-color: #F5E6BE; color: #1A1A1A; scroll-behavior: smooth; cursor: none !important; margin: 0; padding: 0; }
       .bg-halftone { background-size: 8px 8px; background-image: radial-gradient(circle, rgba(0, 0, 0, 0.1) 1px, transparent 1px); }
       ::-webkit-scrollbar { width: 12px; }
       ::-webkit-scrollbar-track { background: #F5E6BE; }
@@ -50,7 +50,6 @@
         scroll-margin-top: 80px;
       }
 
-      /* Cursor override for specific elements if needed */
       button, a, .interactive { cursor: none !important; }
     </style>
 
@@ -162,7 +161,7 @@
           map.textContent = JSON.stringify({ imports });
           document.head.appendChild(map);
 
-          await new Promise(r => setTimeout(r, 50));
+          await new Promise(r => setTimeout(r, 100));
           
           const entry = document.createElement('script');
           entry.type = 'module';
