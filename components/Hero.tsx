@@ -20,18 +20,18 @@ const Hero: React.FC<HeroProps> = ({ onNameClick }) => {
         <div className="bg-blue-600 text-white flex justify-between px-4 py-2 border-b-4 border-black font-comic tracking-widest text-lg md:text-xl uppercase">
           <span className="flex items-center gap-2">
             <Star size={20} fill="#FACC15" className="text-yellow-400 stroke-black stroke-2"/> 
-            AMAZING CODE STORIES
+            SENSATIONAL PIXELS
           </span>
           <span className="font-bold">VOL. 1 • 25¢</span>
         </div>
         <div className="p-4 md:p-6 flex flex-col md:flex-row justify-between items-center gap-4 bg-yellow-400">
           <h1 className="font-comic text-6xl md:text-8xl text-black leading-none [-webkit-text-stroke:2px_white] drop-shadow-[4px_4px_0_black]">
-            THE FULL STACK
+            THE MASTER DESIGNER
           </h1>
           <div className="bg-white border-4 border-black p-2 transform rotate-2 shadow-[4px_4px_0_black]">
              <div className="border-2 border-black border-dashed p-1">
                <span className="font-comic text-xl text-black leading-none block text-center">
-                 APPROVED BY THE <br/> WIZARD AUTHORITY
+                 APPROVED BY THE <br/> CREATIVE AUTHORITY
                </span>
              </div>
           </div>
@@ -55,7 +55,7 @@ const Hero: React.FC<HeroProps> = ({ onNameClick }) => {
                 MEANWHILE...
               </div>
               <p className="font-comic text-2xl md:text-3xl text-black leading-none transform skew-x-3 uppercase">
-                "IN A WORLD OF SPAGHETTI CODE, ONE DEV RISES TO BRING ORDER TO THE CHAOS!"
+                "IN A WORLD OF CHAOTIC INTERFACES, ONE VISIONARY RISES TO BRING ELEGANCE TO THE MUGGLE WEB!"
               </p>
            </motion.div>
 
@@ -77,7 +77,7 @@ const Hero: React.FC<HeroProps> = ({ onNameClick }) => {
                   RAJESH
                 </motion.h2>
                 <h2 className="font-comic text-6xl md:text-8xl text-red-600 leading-none [-webkit-text-stroke:3px_black] drop-shadow-[6px_6px_0_black] absolute -bottom-8 md:-bottom-12 right-0 z-20 transform -rotate-6 pointer-events-none">
-                  STRIKES!
+                  CREATES!
                 </h2>
               </motion.div>
               
@@ -88,7 +88,7 @@ const Hero: React.FC<HeroProps> = ({ onNameClick }) => {
                 transition={{ delay: 2, type: "spring" }}
                 className="absolute -right-8 top-0 md:-right-24 md:top-8 bg-yellow-400 border-4 border-black p-3 rounded-full z-30 animate-bounce pointer-events-none"
               >
-                <span className="font-comic text-xl text-black font-bold whitespace-nowrap">CLICK ME!</span>
+                <span className="font-comic text-xl text-black font-bold whitespace-nowrap">VIEW VISION!</span>
                 <div className="absolute top-1/2 -left-3 w-4 h-4 bg-yellow-400 border-l-4 border-b-4 border-black transform rotate-45"></div>
               </motion.div>
            </div>
@@ -105,14 +105,14 @@ const Hero: React.FC<HeroProps> = ({ onNameClick }) => {
            >
               {/* Burst Badge */}
               <div className="absolute -top-8 -right-8 w-24 h-24 bg-red-600 text-white flex items-center justify-center font-comic text-center text-xl border-4 border-black z-30 shadow-[4px_4px_0_black] rounded-full animate-pulse">
-                <span className="transform -rotate-12 leading-none">ACTION PACKED!</span>
+                <span className="transform -rotate-12 leading-none">PIXEL PERFECT!</span>
               </div>
 
               {/* Panel Content */}
               <div className="w-full h-full border-4 border-black overflow-hidden relative grayscale contrast-125 group-hover:grayscale-0 group-hover:contrast-100 transition-all duration-300">
                  <img 
-                   src="https://picsum.photos/seed/wizard dev/600/800" 
-                   alt="Rajesh Hero" 
+                   src="https://picsum.photos/seed/designer portrait/600/800" 
+                   alt="Rajesh Designer" 
                    className="w-full h-full object-cover"
                  />
                  
@@ -131,7 +131,7 @@ const Hero: React.FC<HeroProps> = ({ onNameClick }) => {
                  {/* Caption Box */}
                  <div className="absolute bottom-0 left-0 right-0 bg-yellow-400 border-t-4 border-black p-2">
                     <p className="font-comic text-center text-lg leading-none uppercase">
-                      <span className="font-bold">FIG 1.</span> THE CHOSEN DEV AT WORK
+                      <span className="font-bold">FIG 1.</span> THE VISIONARY AT HIS CANVAS
                     </p>
                  </div>
               </div>
@@ -147,20 +147,10 @@ const Hero: React.FC<HeroProps> = ({ onNameClick }) => {
       >
          <div className="bg-white border-4 border-black px-6 py-2 shadow-[6px_6px_0_black] transform -rotate-1 hover:rotate-0 transition-transform">
             <span className="font-comic text-2xl flex items-center gap-2">
-              CONTINUE THE SAGA <ArrowRight size={24} className="stroke-[3px]" />
+              BROWSE THE PORTFOLIO <ArrowRight size={24} className="stroke-[3px]" />
             </span>
          </div>
       </motion.div>
-
-      {/* Background Decor: Comic Dots */}
-      <div 
-        className="absolute top-0 right-0 w-1/2 h-full opacity-10 pointer-events-none -z-10"
-        style={{
-          backgroundImage: 'radial-gradient(#000 2px, transparent 2px)',
-          backgroundSize: '20px 20px'
-        }}
-      ></div>
-
     </section>
   );
 };

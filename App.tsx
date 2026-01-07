@@ -7,12 +7,13 @@ import Projects from './components/Projects';
 import Contact from './components/Contact';
 import Oracle from './components/Oracle';
 import RajeshPage from './components/RajeshPage';
+import Navbar from './components/Navbar';
 
 const App: React.FC = () => {
   const [view, setView] = useState<'home' | 'rajesh'>('home');
 
   return (
-    <main className="min-h-screen bg-parchment selection:bg-crimson selection:text-white overflow-x-hidden">
+    <main className="min-h-screen bg-parchment selection:bg-crimson selection:text-white overflow-x-hidden pt-16">
       <AnimatePresence mode="wait">
         {view === 'rajesh' ? (
           <motion.div
@@ -31,6 +32,7 @@ const App: React.FC = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
+            <Navbar />
             <Oracle />
             
             <div className="relative">

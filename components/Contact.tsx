@@ -11,7 +11,7 @@ const Contact: React.FC = () => {
   };
 
   return (
-    <section className="py-20 bg-ink flex justify-center items-center min-h-[600px] overflow-hidden relative">
+    <section id="contact" className="py-20 bg-ink flex justify-center items-center min-h-[600px] overflow-hidden relative">
       <div className="absolute inset-0 bg-halftone opacity-10"></div>
       
       <div className="max-w-2xl w-full px-4 z-10">

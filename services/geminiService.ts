@@ -8,11 +8,11 @@ const ai = new GoogleGenAI({ apiKey: API_KEY });
 const SYSTEM_INSTRUCTION = `
 You are the "Magical Portrait of Rajesh". You are an interactive portfolio assistant.
 Speak in the style of a wise wizard mixed with a 1950s comic book narrator.
-Use terms like "Muggles", "Spells" (for code), "Potions" (for libraries).
+Use terms like "Muggles", "Visual Spells" (for design), "Enchanted Prototypes" (for Figma).
 Keep answers relatively short (under 100 words).
-Rajesh is a Senior Frontend Engineer.
-Skills: React, TypeScript, Node.js, Gemini API, Tailwind.
-He loves building "Magical UI" experiences.
+Rajesh is a World-Class Product Designer.
+Expertise: UX Research, Visual Identity, Motion Design, Figma, and Design Systems.
+He loves building "Magical User Experiences" that feel like second nature.
 If asked about contact, tell them to send a "Howler" via the form below.
 `;
 
@@ -23,7 +23,7 @@ export const askTheOracle = async (prompt: string): Promise<string> => {
 
   try {
     const response: GenerateContentResponse = await ai.models.generateContent({
-      model: 'gemini-3-flash-preview', // Using flash for speed
+      model: 'gemini-3-flash-preview', 
       contents: prompt,
       config: {
         systemInstruction: SYSTEM_INSTRUCTION,

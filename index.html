@@ -37,7 +37,7 @@
       }
     </script>
     <style>
-      body { background-color: #F5E6BE; color: #1A1A1A; }
+      body { background-color: #F5E6BE; color: #1A1A1A; scroll-behavior: smooth; }
       .bg-halftone { background-size: 8px 8px; background-image: radial-gradient(circle, rgba(0, 0, 0, 0.1) 1px, transparent 1px); }
       ::-webkit-scrollbar { width: 12px; }
       ::-webkit-scrollbar-track { background: #F5E6BE; }
@@ -45,6 +45,11 @@
       .text-stroke-black { -webkit-text-stroke: 2px #1A1A1A; }
       .text-stroke-crimson { -webkit-text-stroke: 1px #7E0001; }
       .text-stroke-sm { -webkit-text-stroke: 1px #1A1A1A; }
+      
+      /* Smooth reveal for hidden sections when clicking nav */
+      :target {
+        scroll-margin-top: 80px;
+      }
     </style>
 
     <!-- Polyfill for process.env -->
@@ -83,6 +88,7 @@
           'types': './types.ts',
           'services/geminiService': './services/geminiService.ts',
           'components/MagicCursor': './components/MagicCursor.tsx',
+          'components/Navbar': './components/Navbar.tsx',
           'components/Hero': './components/Hero.tsx',
           'components/Timeline': './components/Timeline.tsx',
           'components/Skills': './components/Skills.tsx',
@@ -94,7 +100,7 @@
           'index': './index.tsx'
         };
 
-        // Explicitly use React 18 versions that are known to work well with standalone Babel
+        // Static Import Map defined dynamically to avoid browser double-map error
         const imports = {
           "react": "https://esm.sh/react@18.2.0",
           "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
@@ -158,14 +164,13 @@
             imports[name] = URL.createObjectURL(blob);
           }
 
-          // 6. Inject Import Map (Only one allowed per page!)
+          // 6. Inject Import Map
           const map = document.createElement('script');
           map.type = 'importmap';
           map.textContent = JSON.stringify({ imports });
           document.head.appendChild(map);
 
           // 7. Load Entry Point
-          // We wait a tick to ensure the import map is registered
           await new Promise(r => setTimeout(r, 50));
           
           const entry = document.createElement('script');
@@ -174,7 +179,6 @@
           document.body.appendChild(entry);
           
           status.textContent = "DONE!";
-          // Remove loading screen after a short delay to show the app
           setTimeout(() => {
             const screen = document.getElementById('loading-screen');
             if(screen) screen.style.display = 'none';
